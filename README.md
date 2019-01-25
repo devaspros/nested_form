@@ -1,20 +1,17 @@
 # Nested Form
 
-[<img src="https://secure.travis-ci.org/ryanb/nested_form.png?branch=master" alt="Build Status" />](http://travis-ci.org/ryanb/nested_form)
-
 This is a Rails gem for conveniently manage multiple nested models in a single form. It does so in an unobtrusive way through jQuery or Prototype.
 
-This gem only works with Rails 3. See the [rails2 branch](https://github.com/ryanb/nested_form/tree/rails2) for a plugin to work in Rails 2.
+This gem works with Rails 3+.
 
 An example project showing how this works is available in the [complex-nested-forms/nested_form branch](https://github.com/ryanb/complex-form-examples/tree/nested_form).
-
 
 ## Setup
 
 Add it to your Gemfile then run `bundle` to install it.
 
 ```ruby
-gem "nested_form"
+gem 'nested_form'
 ```
 
 And then add it to the Asset Pipeline in the application.js file:
@@ -78,7 +75,6 @@ The `:_destroy` must be there so that we can delete tasks.
 
 Use `simple_nested_form_for` or `semantic_nested_form_for` for SimpleForm and Formtastic support respectively.
 
-
 ## Partials
 
 It is often desirable to move the nested fields into a partial to keep things organized. If you don't supply a block to fields_for it will look for a partial and use that.
@@ -88,7 +84,6 @@ It is often desirable to move the nested fields into a partial to keep things or
 ```
 
 In this case it will look for a partial called "task_fields" and pass the form builder as an `f` variable to it.
-
 
 ## Specifying a Target for Nested Fields
 
@@ -115,7 +110,6 @@ below, the following syntax must be used.
 ```erb
 <p><%= f.link_to_add "Add a task", :tasks, "data-target" => "#tasks" %></p>
 ```
-
 
 ## JavaScript events
 
