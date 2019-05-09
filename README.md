@@ -1,10 +1,8 @@
 # Nested Form
 
-This is a Rails gem for conveniently manage multiple nested models in a single form. It does so in an unobtrusive way through jQuery or Prototype.
+Conveniently manage multiple nested models in a single form. It does so in an unobtrusive way through jQuery or Prototype.
 
 This gem works with Rails 3+.
-
-An example project showing how this works is available in the [complex-nested-forms/nested_form branch](https://github.com/ryanb/complex-form-examples/tree/nested_form).
 
 ## Setup
 
@@ -14,7 +12,7 @@ Add it to your Gemfile then run `bundle` to install it.
 gem 'nested_form'
 ```
 
-And then add it to the Asset Pipeline in the application.js file:
+And then add it to the Asset Pipeline in `app/assets/javascripts/application.js` file:
 
 ```
 //= require jquery_nested_form
@@ -24,7 +22,7 @@ And then add it to the Asset Pipeline in the application.js file:
 
 If you do not use the asset pipeline, run this generator to create the JavaScript file.
 
-```
+```bash
 rails g nested_form:install
 ```
 
@@ -36,7 +34,9 @@ You can then include the generated JavaScript in your layout.
 
 ## Usage
 
-Imagine you have a `Project` model that `has_many :tasks`. To be able to use this gem, you'll need to add `accepts_nested_attributes_for :tasks` to your Project model. If you wish to allow the nested objects to be destroyed, then add the `:allow_destroy => true` option to that declaration. See the [accepts_nested_attributes_for documentation](http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html#method-i-accepts_nested_attributes_for) for details on all available options.
+Imagine you have a `Project` model that `has_many :tasks`. To be able to use this gem, you'll need to add `accepts_nested_attributes_for :tasks` to your Project model. If you wish to allow the nested objects to be destroyed, then add the `:allow_destroy => true` option to that declaration.
+
+> See the [accepts_nested_attributes_for documentation](http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html#method-i-accepts_nested_attributes_for) for details on all available options.
 
 This will create a `tasks_attributes=` method, so you may need to add it to the `attr_accessible` array (`attr_accessible :tasks_attributes`).
 
@@ -60,8 +60,9 @@ In order to choose how to handle, after validation errors, fields that are
 marked for destruction, the `marked_for_destruction` class is added on the div
 if the object is marked for destruction.
 
-## Strong Parameters
-For Rails 4 or people using the "strong_parameters" gem, here is an example:
+### Strong Parameters
+
+For Rails 4 or people using the _strong_parameters_ gem, here is an example:
 
 ```ruby
 params.require(:project).permit(:name, tasks_attributes: [:id, :name, :_destroy])
@@ -71,11 +72,11 @@ The `:id` is to make sure you do not end up with a whole lot of tasks.
 
 The `:_destroy` must be there so that we can delete tasks.
 
-## SimpleForm and Formtastic Support
+### SimpleForm and Formtastic Support
 
 Use `simple_nested_form_for` or `semantic_nested_form_for` for SimpleForm and Formtastic support respectively.
 
-## Partials
+### Partials
 
 It is often desirable to move the nested fields into a partial to keep things organized. If you don't supply a block to fields_for it will look for a partial and use that.
 
@@ -85,10 +86,10 @@ It is often desirable to move the nested fields into a partial to keep things or
 
 In this case it will look for a partial called "task_fields" and pass the form builder as an `f` variable to it.
 
-## Specifying a Target for Nested Fields
+### Specifying a Target for Nested Fields
 
 By default, `link_to_add` appends fields immediately before the link when
-clicked.  This is not desirable when using a list or table, for example.  In
+clicked. This is not desirable when using a list or table, for example. In
 these situations, the "data-target" attribute can be used to specify where new
 fields should be inserted.
 
@@ -113,24 +114,14 @@ below, the following syntax must be used.
 
 ## JavaScript events
 
-Sometimes you want to do some additional work after element was added or removed, but only
-after DOM was _really_ modified. In this case simply listening for click events on
-'Add new'/'Remove' link won't reliably work, because your code and code that inserts/removes
-nested field will run concurrently.
+Sometimes you want to do some additional work after element was added or removed, but only after DOM was _really_ modified. In this case simply listening for click events on
+'Add new'/'Remove' link won't reliably work, because your code and code that inserts/removes nested field will run concurrently.
 
-This problem can be solved, because after adding or removing the field a set of custom events
-is triggered on this field. Using form example from above, if you click on the "Add a task" link,
-`nested:fieldAdded` and `nested:fieldAdded:tasks` will be triggered, while
-`nested:fieldRemoved` and `nested:fieldRemoved:tasks` will be triggered if you click
-"Remove this task" then.
+This problem can be solved, because after adding or removing the field a set of custom events is triggered on this field. Using form example from above, if you click on the "Add a task" link, `nested:fieldAdded` and `nested:fieldAdded:tasks` will be triggered, while `nested:fieldRemoved` and `nested:fieldRemoved:tasks` will be triggered if you click "Remove this task" then.
 
-These events bubble up the DOM tree, going through `form` element, until they reach the `document`.
-This allows you to listen for the event and trigger some action accordingly. Field element, upon
-which action was made, is passed along with the `event` object. In jQuery you can access it
-via `event.field`, in Prototype the same field will be in `event.memo.field`.
+These events bubble up the DOM tree, going through `form` element, until they reach the `document`. This allows you to listen for the event and trigger some action accordingly. Field element, upon which action was made, is passed along with the `event` object. In jQuery you can access it via `event.field`, in Prototype the same field will be in `event.memo.field`.
 
-For example, you have a date input in a nested field and you want to use jQuery datepicker
-for it. This is a bit tricky, because you have to activate datepicker after field was inserted.
+For example, you have a date input in a nested field and you want to use jQuery datepicker for it. This is a bit tricky, because you have to activate datepicker after field was inserted.
 
 ### jQuery
 
@@ -156,11 +147,9 @@ document.observe('nested:fieldAdded', function(event){
 })  
 ```
 
-Second type of event (i.e. `nested:fieldAdded:tasks`) is useful then you have more than one type
-of nested fields on a form (i.e. tasks and milestones) and want to distinguish, which exactly
-was added/deleted.
+Second type of event (i.e. `nested:fieldAdded:tasks`) is useful then you have more than one type of nested fields on a form (i.e. tasks and milestones) and want to distinguish, which exactly was added/deleted.
 
-See also [how to limit max count of nested fields](https://github.com/ryanb/nested_form/wiki/How-to:-limit-max-count-of-nested-fields)
+> See also [how to limit max count of nested fields](https://github.com/ryanb/nested_form/wiki/How-to:-limit-max-count-of-nested-fields)
 
 ## Enhanced jQuery JavaScript template
 
