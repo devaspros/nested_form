@@ -73,7 +73,8 @@
       var hiddenField = $link.prev('input[type=hidden]');
       hiddenField.val('1');
       
-      var field = $link.closest('.fields');
+      var wrapperSelector = $link.data('wrapper') || '.fields';
+      var field = $link.closest(wrapperSelector);
       field.hide();
       
       field

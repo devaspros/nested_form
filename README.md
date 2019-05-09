@@ -34,6 +34,12 @@ You can then include the generated JavaScript in your layout.
 
 ## Usage
 
+- [Strong Parameters](#strong-parameters)
+- [SimpleForm and Formtastic Support](#simpleform-and-formtastic-support)
+- [Partials](#partials)
+- [Specifying target when adding Nested Fields](#specifying-target-when-adding-nested-fields)
+- [Specifying wrapper to remove Nested Fields](#specifying-wrapper-to-remove-nested-fields)
+
 Imagine you have a `Project` model that `has_many :tasks`. To be able to use this gem, you'll need to add `accepts_nested_attributes_for :tasks` to your Project model. If you wish to allow the nested objects to be destroyed, then add the `:allow_destroy => true` option to that declaration.
 
 > See the [accepts_nested_attributes_for documentation](http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html#method-i-accepts_nested_attributes_for) for details on all available options.
@@ -86,7 +92,7 @@ It is often desirable to move the nested fields into a partial to keep things or
 
 In this case it will look for a partial called "task_fields" and pass the form builder as an `f` variable to it.
 
-### Specifying a Target for Nested Fields
+### Specifying target when adding Nested Fields
 
 By default, `link_to_add` appends fields immediately before the link when
 clicked. This is not desirable when using a list or table, for example. In
@@ -104,6 +110,22 @@ fields should be inserted.
 </table>
 <p><%= f.link_to_add "Add a task", :tasks, :data => { :target => "#tasks" } %></p>
 ```
+
+### Specifying wrapper to remove Nested Fields
+
+By default, `link_to_remove` works by hiding all fields wrapped in div element with `.fields` class.
+
+Having this wrapper is completely optional and can be disabled with `wrapper: false`. However, when disabling the wrapper, `link_to_remove` stops working because it needs to somehow reference the DOM element that holds all fields to "remove".
+
+When using `wrapper: false`, normally one would introduce a default wrapper. Maybe because of a normal wrapper like a bootstrap `.row`.
+
+In those cases, the custom wrapper **class name** should be specify in the `link_to_remove` helper:
+
+```erb
+<%= f.link_to_remove 'Quitar', data: { wrapper: '.row' } %>
+```
+
+> Notice the use of CSS dot notation for class name `.row`
 
 ## JavaScript events
 
