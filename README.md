@@ -1,6 +1,6 @@
 # Nested Form
 
-Conveniently manage multiple nested models in a single form. It does so in an unobtrusive way through jQuery or Prototype.
+Conveniently manage multiple nested models in a single form. It does so in an unobtrusive way through jQuery.
 
 This gem works with Rails 3+.
 
@@ -62,7 +62,7 @@ if the object is marked for destruction.
 
 ### Strong Parameters
 
-For Rails 4 or people using the _strong_parameters_ gem, here is an example:
+For Rails 4+ here is an example:
 
 ```ruby
 params.require(:project).permit(:name, tasks_attributes: [:id, :name, :_destroy])
@@ -105,13 +105,6 @@ fields should be inserted.
 <p><%= f.link_to_add "Add a task", :tasks, :data => { :target => "#tasks" } %></p>
 ```
 
-Note that the `:data` option above only works in Rails 3.1+.  For Rails 3.0 and
-below, the following syntax must be used.
-
-```erb
-<p><%= f.link_to_add "Add a task", :tasks, "data-target" => "#tasks" %></p>
-```
-
 ## JavaScript events
 
 Sometimes you want to do some additional work after element was added or removed, but only after DOM was _really_ modified. In this case simply listening for click events on
@@ -119,11 +112,11 @@ Sometimes you want to do some additional work after element was added or removed
 
 This problem can be solved, because after adding or removing the field a set of custom events is triggered on this field. Using form example from above, if you click on the "Add a task" link, `nested:fieldAdded` and `nested:fieldAdded:tasks` will be triggered, while `nested:fieldRemoved` and `nested:fieldRemoved:tasks` will be triggered if you click "Remove this task" then.
 
-These events bubble up the DOM tree, going through `form` element, until they reach the `document`. This allows you to listen for the event and trigger some action accordingly. Field element, upon which action was made, is passed along with the `event` object. In jQuery you can access it via `event.field`, in Prototype the same field will be in `event.memo.field`.
+These events bubble up the DOM tree, going through `form` element, until they reach the `document`. This allows you to listen for the event and trigger some action accordingly. Field element, upon which action was made, is passed along with the `event` object. In jQuery you can access it via `event.field`.
 
 For example, you have a date input in a nested field and you want to use jQuery datepicker for it. This is a bit tricky, because you have to activate datepicker after field was inserted.
 
-### jQuery
+See example below for jQuery:
 
 ```javascript
 $(document).on('nested:fieldAdded', function(event){
@@ -134,17 +127,6 @@ $(document).on('nested:fieldAdded', function(event){
   // and activate datepicker on it
   dateField.datepicker();
 })
-```
-
-### Prototype
-
-```javascript
-document.observe('nested:fieldAdded', function(event){
-  var field = event.memo.field;
-  // it's already extended by Prototype
-  var dateField = field.down('.date');
-  dateField.datepicker();
-})  
 ```
 
 Second type of event (i.e. `nested:fieldAdded:tasks`) is useful then you have more than one type of nested fields on a form (i.e. tasks and milestones) and want to distinguish, which exactly was added/deleted.
