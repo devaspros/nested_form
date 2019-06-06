@@ -1,0 +1,22 @@
+{
+  "name": "jquery_nested_form",
+  "version": "0.3.2",
+  "description": "Rails nested form gem jQuery file to import with webpacker",
+  "main": "vendor/assets/javascripts/jquery_nested_form.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devaspros/nested_form.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devaspros/nested_form/issues"
+  },
+  "homepage": "https://github.com/devaspros/nested_form#readme"
+}
