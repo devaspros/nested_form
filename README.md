@@ -32,6 +32,26 @@ You can then include the generated JavaScript in your layout.
 <%= javascript_include_tag :defaults, "nested_form" %>
 ```
 
+### Rails 5+ and Webpacker
+
+As Nested Form is a very old project, support for a NPM package was never provided and although being old enough, this gem works fine with newer versions of Rails up until 5.2.3.
+
+If you're using [webpacker](https://github.com/rails/webpacker) and want to introduce Nested Form to your project, you can use the NPM verion that is just an entrypoint to the file located in `vendor/assets/javascripts/jquery_nested_form`.
+
+> You can manually download the file and import it as well but I wanted to try publishing it to NPM.
+
+Add it to your project with:
+
+```bash
+$ yarn add jquery_nested_form
+```
+
+And import it in your `application.js` pack:
+
+```javascript
+import 'jquery_nested_form'
+```
+
 ## Usage
 
 - [Strong Parameters](#strong-parameters)
