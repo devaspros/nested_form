@@ -1,6 +1,6 @@
 {
   "name": "jquery_nested_form",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Rails nested form gem jQuery file to import with webpacker",
   "main": "vendor/assets/javascripts/jquery_nested_form.js",
   "directories": {
